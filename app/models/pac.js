@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import SharedStuff from '../mixins/shared-stuff';
+import GridInfo from '../mixins/grid-info';
 import Movement from '../mixins/movement';
 
-export default Ember.Object.extend(SharedStuff, Movement, {
+export default Ember.Object.extend(GridInfo, Movement, {
   direction: 'down',
   intent: 'down',
 

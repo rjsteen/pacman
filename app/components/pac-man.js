@@ -1,13 +1,13 @@
 import Ember from 'ember';
 import KeyboardShortcuts from 'ember-keyboard-shortcuts/mixins/component';
-import SharedStuff from '../mixins/shared-stuff';
+import GridInfo from '../mixins/grid-info';
 import Pac from '../models/pac';
 import Level from '../models/level';
 import Level2 from '../models/level2';
 import TeleportLevel from '../models/teleport-level';
 import Ghost from '../models/ghost';
 
-export default Ember.Component.extend(KeyboardShortcuts, SharedStuff, {
+export default Ember.Component.extend(KeyboardShortcuts, GridInfo, {
   didInsertElement() {
     this.startNewLevel();
     this.loop();
