@@ -153,55 +153,15 @@ export default Ember.Component.extend(KeyboardShortcuts, SharedStuff, {
     right() { this.set('pac.intent', 'right');}
   },
 
-  isMoving: false,
-
-  changePacDirection(){
-    let intent = this.get('pac.intent');
-    if(this.pathBlockedInDirection(intent)){
-      this.set('pac.direction', 'stopped');
-    } else {
-      this.set('pac.direction', intent);
-    }
-  },
-
-  nextCoordinate(coordinate, direction){
-    let next = this.get(coordinate) + this.get(`directions.${direction}.${coordinate}`);
-    if(this.get('level.teleport')) {
-      if(direction === 'up' || direction === 'down'){
-        return this.modulo(next, this.get('level.height'));
-      } else {
-        return this.modulo(next, this.get('level.width'));
-      }
-    } else {
-      return next;
-    }
-  },
-
-  modulo(num, mod){
-    return ((num + mod) % mod);
-  },
-
   offsetFor(coordinate, direction){
     let frameRatio = this.get('frameCycle') / this.get('framesPerMovement');
     return this.get(`directions.${direction}.${coordinate}`) * frameRatio;
   },
 
-  pathBlockedInDirection(direction){
-    let cellTypeInDirection = this.cellTypeInDirection(direction);
-    return Ember.isEmpty(cellTypeInDirection) || cellTypeInDirection === 1;
-  },
-
-  cellTypeInDirection(direction){
-    let nextX = this.nextCoordinate('x', direction);
-    let nextY = this.nextCoordinate('y', direction);
-
-    return this.get(`level.grid.${nextY}.${nextX}`);
-  },
-
   detectGhostCollisions(){
     return this.get('ghosts').filter((ghost)=>{
-      return (this.get('pac.x') == ghost.get('x') &&
-              this.get('pac.y') == ghost.get('y'))
+      return (this.get('pac.x') === ghost.get('x') &&
+              this.get('pac.y') === ghost.get('y'));
     });
   }
 });
