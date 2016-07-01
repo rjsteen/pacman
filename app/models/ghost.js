@@ -8,18 +8,11 @@ export default Ember.Object.extend(SharedStuff, Movement, {
     this.set('startingY', this.get('y'));
     return this._super(...arguments);
   },
-
-  removed: Ember.computed.gt('retreatTime', 0),
+  direction: 'stopped';
+  timers: ['retreatTime'],
   retreatTime: 0,
   maxRetreatTime: 500,
-  timers: ['retreatTime'],
-  retreat(){
-    this.set('retreatTime', this.get('maxRetreatTime'));
-    this.set('removed', true);
-    this.set('frameCycle', 0);
-    this.set('x', this.get('level.ghostRetreat.x'));
-    this.set('y', this.get('level.ghostRetreat.y'));
-  },
+  removed: Ember.computed.gt('retreatTime', 0),
 
   color: Ember.computed('retreatTime', function(){
     let timerPercentage = this.get('retreatTime') / this.get('maxRetreatTime');
@@ -40,11 +33,18 @@ export default Ember.Object.extend(SharedStuff, Movement, {
     this.set('direction', 'stopped');
   },
 
+  retreat(){
+    this.set('retreatTime', this.get('maxRetreatTime'));
+    this.set('frameCycle', 0);
+    this.set('x', this.get('level.ghostRetreat.x'));
+    this.set('y', this.get('level.ghostRetreat.y'));
+  },
+
   draw(){
     let x = this.get('x');
     let y = this.get('y');
     let radiusDivisor = 2;
-    this.drawCircle(x, y, radiusDivisor, this.get('direction'), '#F55');
+    this.drawCircle(x, y, radiusDivisor, this.get('direction'), this.get('color'));
   },
 
   changeDirection(){
@@ -52,7 +52,7 @@ export default Ember.Object.extend(SharedStuff, Movement, {
     let directionWeights = directions.map((direction)=>{
       return this.chanceOfPacmanIfInDirection(direction);
     });
-    
+
     let bestDirection = this.getRandomItem(directions, directionWeights);
     this.set('direction', bestDirection);
   },
@@ -71,7 +71,7 @@ export default Ember.Object.extend(SharedStuff, Movement, {
   },
 
   getRandomItem(list, weight){
-    var total_weight = weight.reduce(function(prev, cur){
+    var total_weight = weight.reduce(function(prev, cur, i, arr) {
       return prev + cur;
     });
 

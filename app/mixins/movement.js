@@ -4,11 +4,12 @@ export default Ember.Mixin.create({
   x: null,
   y: null,
   level: null,
-  direction: 'down',
+  direction: 'stopped',
   timers: [],
 
   move(){
     if(this.get('removed')){
+      // do nothing, it's gone
     } else if(this.animationCompleted()){
       this.finalizeMove();
       this.changeDirection();
@@ -43,7 +44,7 @@ export default Ember.Mixin.create({
 
   pathBlockedInDirection(direction) {
     let cellTypeInDirection = this.cellTypeInDirection(direction);
-    return Ember.isEmpty(cellTypeInDirection) || cellTypeInDirection === 1;
+    return Ember.isEmpty(cellTypeInDirection) || cellTypeInDirection === 'w';
   },
 
   cellTypeInDirection(direction) {

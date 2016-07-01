@@ -10,7 +10,7 @@ export default Ember.Mixin.create({
     return ctx;
   }),
 
-  drawCircle(x, y, radiusDivisor, direction, color = '#000'){
+  drawCircle(x, y, radiusDivisor, direction, color = '#BBF'){
     let ctx = this.get('ctx');
     let squareSize = this.get('level.squareSize');
 
