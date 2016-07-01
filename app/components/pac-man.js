@@ -53,18 +53,18 @@ export default Ember.Component.extend(KeyboardShortcuts, SharedStuff, {
   levelNumber: 1,
   lives: 3,
 
-  drawWall: function(x, y){
+  drawWall(x, y){
     let ctx = this.get('ctx');
     let squareSize = this.get('level.squareSize');
 
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = this.get('level.wallColor');
     ctx.fillRect(x * squareSize,
                  y * squareSize,
                  squareSize,
                  squareSize);
   },
 
-  drawGrid: function(){
+  drawGrid(){
     let grid = this.get('level.grid');
     grid.forEach((row, rowIndex)=>{
       row.forEach((cell, columnIndex)=>{

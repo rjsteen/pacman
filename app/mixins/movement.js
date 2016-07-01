@@ -31,7 +31,7 @@ export default Ember.Mixin.create({
   },
 
   animationCompleted(){
-    return this.get('frameCycle') == this.get('framesPerMovement');
+    return this.get('frameCycle') === this.get('framesPerMovement');
   },
 
   finalizeMove(){

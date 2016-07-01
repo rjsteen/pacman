@@ -8,7 +8,7 @@ export default Ember.Object.extend(SharedStuff, Movement, {
     this.set('startingY', this.get('y'));
     return this._super(...arguments);
   },
-  direction: 'stopped';
+  direction: 'stopped',
   timers: ['retreatTime'],
   retreatTime: 0,
   maxRetreatTime: 500,

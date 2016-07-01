@@ -51,4 +51,4 @@ export default Level.extend({
     x: 10,
     y: 9
   }
-})
+});
