@@ -1,31 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-  // 0 is a blank space
-  // 1 is a well
-  // 2 is a pellet
-  layout: [
-    [2,2,2,2,2,2,2,1],
-    [2,1,2,1,2,2,2,1],
-    [2,2,1,2,2,2,2,1],
-    [2,2,2,2,2,2,2,1],
-    [2,2,2,2,2,2,2,1],
-    [1,2,2,2,2,2,2,1]
-  ],
-
-  startingPac: {
-    x: 2,
-    y: 1
-  },
-  startingGhosts: [{
-    x: 0,
-    y: 0
-  }, {
-    x: 5,
-    y: 0
-  }],
-
   squareSize: 40,
+  teleport: true,
+  wallColor: '#CCC',
+  pelletColor: '#CCC',
+  powerPelletColor: '#0E0',
+
   width: Ember.computed(function(){
     return this.get('grid.firstObject.length');
   }),
@@ -39,13 +20,37 @@ export default Ember.Object.extend({
     return this.get('height') * this.get('squareSize');
   }),
 
+  //   is a blank space
+  // w is a wall
+  // . is a pellet
+  layout: [
+    '...wwwww',
+    '.w.wwwww',
+    '..w.wwww',
+    '....wwww',
+    '....wwww',
+    'w...wwww',
+  ],
+
+  startingPac: {
+    x: 2,
+    y: 1
+  },
+  startingGhosts: [{
+  //   x: 3,
+  //   y: 2,
+  // }, {
+  //   x: 6,
+  //   y: 0
+  }],
+
   isComplete(){
     let hasPelletsLeft = false;
     let grid = this.get('grid');
 
     grid.forEach((row)=>{
       row.forEach((cell)=>{
-        if(cell == 2){
+        if(cell == '.'){
           hasPelletsLeft = true;
         }
       });
@@ -54,7 +59,9 @@ export default Ember.Object.extend({
   },
 
   restart(){
-    var newGrid = jQuery.extend(true, [], this.get('layout'));
-    this.set('grid', newGrid);
+    var newLayout = this.get('layout').map((row)=>{
+      return row.split('');
+    });
+    this.set('grid', newLayout);
   }
 });
